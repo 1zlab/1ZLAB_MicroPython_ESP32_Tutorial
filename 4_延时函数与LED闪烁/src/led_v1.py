@@ -8,8 +8,8 @@
 import utime
 import machine
 
-# 声明一个引脚 例如 D13 作为LED的引脚
-led_pin = machine.Pin(13, machine.Pin.OUT)
+# 声明一个引脚 例如 D12 作为LED的引脚
+led_pin = machine.Pin(12, machine.Pin.OUT)
 
 while True:
     # 点亮LED -> 高电平

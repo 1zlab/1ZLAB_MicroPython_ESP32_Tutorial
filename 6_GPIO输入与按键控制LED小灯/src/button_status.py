@@ -6,7 +6,7 @@ from machine import Pin
 import utime
 
 # 引脚
-button = Pin(5, Pin.IN)
+button = Pin(22, Pin.IN)
 
 # 定义按键按下的值 （取决于按键模块的设计， 有可能相反）
 BTN_DOWN = 0 # 按键按下对应的取值 
@@ -17,8 +17,8 @@ while True:
     btn_status = button.value()
 
     if btn_status == BTN_DOWN:
-        print("按键状态：按下")
+        print("按键状态：按下 <<<<<<<<")
     else:
-        print("按键状态：抬起")
+        print("按键状态：抬起 ========")
     # 延时500ms
-    utime.sleep_ms(500)
+    utime.sleep_ms(100)

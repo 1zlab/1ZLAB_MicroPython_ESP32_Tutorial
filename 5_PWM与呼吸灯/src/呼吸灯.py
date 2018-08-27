@@ -1,3 +1,7 @@
+'''
+呼吸灯测试程序
+
+'''
 import machine
 import utime, math
 

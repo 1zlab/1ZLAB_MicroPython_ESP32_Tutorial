@@ -100,17 +100,11 @@ v2版本的代码是使用Python里面的`Function 函数` 来封装了一下LED
 
 
 ```python
-'''
-功能介绍： LED闪烁例程
-
-版本 v2
-版本说明： 利用函数实现led闪烁
-'''
 import utime
 import machine
 
-# 声明一个引脚 例如 D13 作为LED的引脚
-led_pin = machine.Pin(13, machine.Pin.OUT)
+# 声明一个引脚 例如 D12 作为LED的引脚
+led_pin = machine.Pin(12, machine.Pin.OUT)
 
 def led_blink(led_pin, delay_ms=500):
     '''
@@ -123,13 +117,6 @@ def led_blink(led_pin, delay_ms=500):
     utime.sleep_ms(delay_ms) # 延时500ms
 
 while True:
-    # 点亮LED -> 高电平
-    led_pin.value(1)
-    # 延时 500ms
-    utime.sleep_ms(500)
-    # 关闭LED -> 低电平
-    led_pin.value(0)
-    # 延时500ms
-    utime.sleep_ms(500)
+    led_blink(led_pin, delay_ms=500)
 ```
-
+你可以尝试不同的`delay_ms` 查看LED的闪烁效果。

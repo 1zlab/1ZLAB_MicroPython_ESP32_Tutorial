@@ -7,8 +7,8 @@ from machine import Pin
 import utime
 
 # 按键
-button = Pin(5, Pin.IN)
-led = Pin(25, Pin.OUT)
+button = Pin(22, Pin.IN)
+led = Pin(12, Pin.OUT)
 
 
 # 定义按键按下的值 （取决于按键模块的设计， 有可能相反）

@@ -7,8 +7,8 @@
 import utime
 import machine
 
-# 声明一个引脚 例如 D13 作为LED的引脚
-led_pin = machine.Pin(13, machine.Pin.OUT)
+# 声明一个引脚 例如 D12 作为LED的引脚
+led_pin = machine.Pin(12, machine.Pin.OUT)
 
 def led_blink(led_pin, delay_ms=500):
     '''
@@ -21,11 +21,5 @@ def led_blink(led_pin, delay_ms=500):
     utime.sleep_ms(delay_ms) # 延时500ms
 
 while True:
-    # 点亮LED -> 高电平
-    led_pin.value(1)
-    # 延时 500ms
-    utime.sleep_ms(500)
-    # 关闭LED -> 低电平
-    led_pin.value(0)
-    # 延时500ms
-    utime.sleep_ms(500)
+    led_blink(led_pin, delay_ms=500)
+    # led_blink(led_pin, delay_ms=100)

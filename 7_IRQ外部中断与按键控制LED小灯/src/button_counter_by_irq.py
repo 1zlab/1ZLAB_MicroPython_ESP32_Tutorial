@@ -1,5 +1,8 @@
 '''
+[功能描述]
 利用按键中断， 实现按键计数器 每按一下，数值加1
+
+[存在问题]
 
 TODO: 软件消抖的效果 仍然不好。
 TODO: 回调函数是不是不应该有延迟
@@ -29,7 +32,6 @@ def counter_callback(pin):
     if pin.value() == 0:
         counter += 1
         print("Counter += 1 ; Counter = %d"%(counter))
-    
 
 button.irq(trigger=Pin.IRQ_FALLING, handler=counter_callback)
 print("按下按键， 会计数哦")
