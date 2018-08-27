@@ -18,8 +18,9 @@
 ## IRQ的API介绍
 IRQ的英文全称是 Interrupt Request， 中断请求的意思。Pin内置的IRQ其实是 **外部中断**，根据输入电平的变化作出相应。
 
-**初始化irq**
-首先要创建一个管脚对象
+**注意：ESP32的任何管脚都可以配置成IRQ外部中断。**
+
+**初始化irq**， 首先要创建一个管脚对象
 ```python
 from machine import Pin
 button = Pin(22, Pin.IN) # 按键
