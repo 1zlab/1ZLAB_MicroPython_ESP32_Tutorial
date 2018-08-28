@@ -8,7 +8,7 @@ from machine import ADC,Pin
 import utime
 
 # 设置D34号引脚作为ADC采样引脚
-pin_read = Pin(34)
+pin_read = Pin(34,Pin.IN)
 # 声明ADC对象
 adc = ADC(pin_read)
 

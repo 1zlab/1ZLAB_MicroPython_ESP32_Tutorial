@@ -1,7 +1,6 @@
 '''
 打印按键的状态
 '''
-
 from machine import Pin
 import utime
 
