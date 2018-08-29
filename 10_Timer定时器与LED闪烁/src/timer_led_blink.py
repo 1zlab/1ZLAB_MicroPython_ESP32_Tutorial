@@ -1,3 +1,6 @@
+'''
+定时器控制LED闪烁
+'''
 from machine import Timer,Pin
 import utime
 
@@ -23,8 +26,8 @@ def led_blink_timed(timer, led_pin, freq=10):
     timer.init(period=period, mode=Timer.PERIODIC, callback=lambda t:led_toggle(led_pin))
 
 
-# 声明引脚 D32 作为LED的引脚
-led_pin = Pin(32, Pin.OUT)
+# 声明引脚 D12 作为LED的引脚
+led_pin = Pin(12, Pin.OUT)
 timer = Timer(1)    # 创建定时器对象
 led_blink_timed(timer, led_pin, freq=20)
 

@@ -1,6 +1,5 @@
 '''
 利用定时器让RGB彩灯按照不同的频率闪烁
-
 '''
 
 from machine import Timer,Pin
