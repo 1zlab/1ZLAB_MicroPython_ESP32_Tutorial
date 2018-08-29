@@ -1,16 +1,8 @@
-
-
 '''
-可用的DAC口， PIN25  PIN26
-STATIC const mdac_obj_t mdac_obj[] = {
-    {{&machine_dac_type}, GPIO_NUM_25, DAC_CHANNEL_1},
-    {{&machine_dac_type}, GPIO_NUM_26, DAC_CHANNEL_2},
-};
+DAC的演示实例-DAC输出正弦波
 '''
-
 from machine import DAC,Pin
 import math
-import Timer
 
 # 创建一个缓冲数组，用于存放一个sin波形
 buf = bytearray(100)
