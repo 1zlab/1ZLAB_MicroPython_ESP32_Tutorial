@@ -189,7 +189,7 @@ class LED:
         OFF -> ON
         ON  -> OFF
         '''
-        self.pin.value(not self.led_pin.value())
+        self.pin.value(not self.pin.value())
 
     def intensity(self, value):
         '''

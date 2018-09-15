@@ -10,12 +10,20 @@
 
 ## GPIO的输入模式
 
+> 注： PyESPCar上自带用户按键，对应GPIO管脚编号为39。
+
+
+
 从`machine` 里面导入`Pin`, 创建一个名字叫做`button`的管脚对象。
 设置模式为输入模式（`Pin.IN`）. 
 ```python
->>> from machine import Pin
-# 引脚
->> button = Pin(22, Pin.IN)
+from machine import Pin
+
+# 用户按键GPIO
+# PyESPCar上自带的用户按键在39号管脚
+USER_BTN = 39
+# 按键引脚对象
+button = Pin(USER_BTN, Pin.IN)
 ```
 读取电平高低的方式依然使用的是`value`函数。
 
@@ -30,8 +38,9 @@
 常规的按键电路，按键按下电路导通，输入高电平，按键抬起输入低电平
 在按键模块采用上拉电路的情况下，按键抬起是高电平，按下是低电平。
 
-
 `BTN_DOWN`跟`BTN_UP`两个取值，可以根据你的按键模块做相应的调整。
+
+`button_status.py`
 
 ```python
 '''
@@ -40,8 +49,11 @@
 from machine import Pin
 import utime
 
-# 引脚
-button = Pin(22, Pin.IN)
+# 用户按键GPIO
+# PyESPCar上自带的用户按键在39号管脚
+USER_BTN = 39
+# 按键引脚对象
+button = Pin(USER_BTN, Pin.IN)
 
 # 定义按键按下的值 （取决于按键模块的设计， 有可能相反）
 BTN_DOWN = 0 # 按键按下对应的取值 
@@ -57,12 +69,15 @@ while True:
         print("按键状态：抬起 ========")
     # 延时500ms
     utime.sleep_ms(100)
+
 ```
 
 ## 按键计数
 
 按键计数就是记录按键按下的次数。
 根据当前按键的状态`btn_status`与上一次按键的状态`last_btn_status`来判断按键是否按下。如果当前按键状态为`BTN_DOWN`，之前的按键状态为`BTN_UP` 则判断为产生一次键盘按下的事件，计数器`counter`就+1。
+
+`button_counter.py`
 
 ```python
 '''
@@ -124,30 +139,31 @@ utime.sleep_ms(200)
 
 ## 按键控制LED亮灭
 
-**关于接线**
-GPIO22接按键， GPIO12接LED模块
-> TODO 接线配图
+用按键来切换LED的状态，在0 - 1之间进行切换.
 
-用按键来切换LED的状态，在0 - 1之间进行切换。
-LED状态转换核心代码：
-```python
-led.value((led.value()+1)%2)
-```
-需要思考一会儿才能领悟其中的真谛。
+LED 就用NodeMCU32s上自带的2号引脚LED，
 
+按键使用PyESPCar小车底板上的用户按键（39号引脚）
 
+**注：需要我们在课程”PWM与呼吸灯“创建的led.py**
+
+`src/button_ctrl_led.py`
 ```python
 '''
 按键控制LED亮灭
 状态转换
 '''
-
 from machine import Pin
 import utime
-
+from led import LED
 # 按键
-button = Pin(22, Pin.IN)
-led = Pin(12, Pin.OUT)
+# 用户按键GPIO
+# PyESPCar上自带的用户按键在39号管脚
+USER_BTN = 39
+# 按键引脚对象
+button = Pin(USER_BTN, Pin.IN)
+# 创建一个LED对象
+led = LED(0)
 
 
 # 定义按键按下的值 （取决于按键模块的设计， 有可能相反）
@@ -160,10 +176,20 @@ while True:
     btn_status = button.value()
 
     if btn_status == BTN_DOWN and last_btn_status == BTN_UP:
-        led.value((led.value()+1)%2)
-        print("按键按下,LED状态转换 LED: {}".format(led.value()))
+        # 切换LED状态
+        led.toggle()
+        print("按键按下,LED状态转换 LED: {}".format(led.pin.value() == led.LED_ON))
+        
     last_btn_status = btn_status
     # 延时500ms
     utime.sleep_ms(150)
 
 ```
+
+
+## 总结
+
+这里大家可以看到， 如果想检测用户按键有没有按下这个动作，需要不停的去在while True 循环里面检测这个事件，那么有没有更好更优雅的实现方式呢？
+
+请看下节课： **IRQ外部中断与按键控制LED小灯**
+

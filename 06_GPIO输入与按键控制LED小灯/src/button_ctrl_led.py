@@ -2,13 +2,17 @@
 按键控制LED亮灭
 状态转换
 '''
-
 from machine import Pin
 import utime
-
+from led import LED
 # 按键
-button = Pin(22, Pin.IN)
-led = Pin(12, Pin.OUT)
+# 用户按键GPIO
+# PyESPCar上自带的用户按键在39号管脚
+USER_BTN = 39
+# 按键引脚对象
+button = Pin(USER_BTN, Pin.IN)
+# 创建一个LED对象
+led = LED(0)
 
 
 # 定义按键按下的值 （取决于按键模块的设计， 有可能相反）
@@ -21,8 +25,10 @@ while True:
     btn_status = button.value()
 
     if btn_status == BTN_DOWN and last_btn_status == BTN_UP:
-        led.value((led.value()+1)%2)
-        print("按键按下,LED状态转换 LED: {}".format(led.value()))
+        # 切换LED状态
+        led.toggle()
+        print("按键按下,LED状态转换 LED: {}".format(led.pin.value() == led.LED_ON))
+        
     last_btn_status = btn_status
     # 延时500ms
     utime.sleep_ms(150)

@@ -11,7 +11,12 @@
 '''
 from machine import Pin
 
-button = Pin(22, Pin.IN) # 按键
+# 用户按键GPIO
+# PyESPCar上自带的用户按键在39号管脚
+USER_BTN = 39
+# 引脚
+button = Pin(USER_BTN, Pin.IN)
+
 counter = 0 # 中断计数器
 def button_irq_handle(pin):
     '''
@@ -24,7 +29,7 @@ def button_irq_handle(pin):
     counter += 1
 
 # 下降沿触发
-button.irq(trigger=Pin.IRQ_FALLING, handler=button_irq_handle)
+button.irq(trigger=Pin.IRQ_RISING, handler=button_irq_handle)
 
 
 try:
