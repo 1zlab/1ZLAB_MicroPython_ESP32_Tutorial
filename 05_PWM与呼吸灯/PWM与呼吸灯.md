@@ -55,7 +55,6 @@ PWM的第二个属性就是**频率**， 频率为控制周期T的倒数。在�
 频率的取值范围由硬件决定，ESP32的PWM频率范围为`0 < freq <= 78125` 
 
 
-
 ## PWM-API文档
 
 **PWM可在所有输出引脚上启用。但其存在局限：须全部为同一频率，且仅有8个通道。频率须位于1Hz和78125Hz之间.**
@@ -63,39 +62,38 @@ PWM的第二个属性就是**频率**， 频率为控制周期T的倒数。在�
 
 在引脚上使用PWM，您须首先创建一个引脚对象，例如:
 
+> PS: 这里用的是GPIO2 安信可的NodeMCU32s上面自带LED
+
 ```python
 >>> from machine import Pin,PWM
->>> p12 = Pin(12,Pin.OUT)
+>>> led_pin = Pin(2,Pin.OUT)
 ```
 
 使用以下指令创建PWM对象:
 
 ```python
 # 把Pin对象传入PWM的构造器中
->>> pwm12 = PWM(p12)
+>>> led_pwm = PWM(led_pin)
 # 初始化PWM 频率=500, 占空比=512
->>> pwm12.init(500, 512)
+>>> led_pwm.init(500, 512)
 ```
 
 或者初始化的时候，一步到位
 
 ```python
->>> pwm12 = PWM(p12, freq=500, duty=512)
+>>> led_pwm = PWM(led_pin, freq=500, duty=512)
 ```
 
-
-
 您也可使用以下方法设置频率与占空比:
-
 ```python
->>> pwm12.freq(500)
->>> pwm12.duty(512)
+>>> led_pwm.freq(500)
+>>> led_pwm.duty(512)
 ```
 
 注意：占空比介于0至1023间，其中512为50%。若您打印PWM对象，则该对象将告知您其当前配置:
 
 ```python
->>> pwm12
+>>> led_pwm
 PWM(12, freq=500, duty=512)
 ```
 
@@ -106,7 +104,7 @@ PWM(12, freq=500, duty=512)
 引脚将继续保持在PWM模式，直至您使用以下指令取消此模式:
 
 ```python
->>> pwm12.deinit()
+>>> led_pwm.deinit()
 ```
 
 **注意： pwm使用完了之后，需要销毁，注意`deinit`**
@@ -120,13 +118,13 @@ PWM(12, freq=500, duty=512)
 > 呼吸灯
 
 
-
+`breath_led_v1.py`
 ```python
 import machine
 import utime, math
 
 # 初始化一个PWM对象叫做 led_pwm
-led_pwm = machine.PWM(machine.Pin(12), freq=1000)
+led_pwm = machine.PWM(machine.Pin(2), freq=1000)
 
 def pulse(led_pwm, delay):
     # 呼吸灯核心代码
@@ -147,11 +145,130 @@ except:
 
 **注意 这里加了一个try except， 如果键盘事件中断之后， pwm资源可以自动释放**
 
+## 升级LED对象led.py
 
+接下来我们对之前的led.py进行升级， 让LED支持设置不同的亮度。
+
+`led.py`
+```python
+'''
+LED类
+v2 添加LED亮度控制 
+'''
+from machine import Pin, PWM
+
+class LED:
+    def __init__(self, led_id):
+        # LED字典 
+        # 数据结构： (gpio管脚编号， LED灭的电平， LED亮的电平)
+        led_list = [(2, False, True),(13, True, False)]
+
+        if led_id >= len(led_list) or led_id < 0:
+            print('ERROR：LED编号无效， 有效ID：{} - {}'.format(0, len(led_list-1)))
+            return None
+        
+        gpio_id, self.LED_OFF, self.LED_ON = led_list[led_id]
+        self.pin = Pin(gpio_id, Pin.OUT)
+        self.pwm = PWM(self.pin, freq=1000)
+
+    def on(self):
+        '''
+        打开LED
+        '''
+        self.pin.value(self.LED_ON)
+    
+    def off(self):
+        '''
+        关闭LED
+        '''
+        self.pin.value(self.LED_OFF)
+    
+    def toggle(self):
+        '''
+        切换LED的状态
+        OFF -> ON
+        ON  -> OFF
+        '''
+        self.pin.value(not self.led_pin.value())
+
+    def intensity(self, value):
+        '''
+        设置LED的亮度
+        '''
+        if self.LED_ON == True:
+            self.pwm.duty(value)
+        else:
+            self.pwm.duty(1023 - value)
+    def deinit(self):
+        '''
+        销毁资源
+        '''
+        self.pwm.deinit()
+```
+
+
+核心就是这个`intensity`函数，在亮度与对应的PWM的占空比之间建立一个映射。
+
+```python
+def intensity(self, value):
+    '''
+    设置LED的亮度
+    '''
+    if self.LED_ON == True:
+        self.pwm.duty(value)
+    else:
+        self.pwm.duty(1023 - value)
+```
+其次，因为PWM资源的限制，当你不再使用LED对象的时候， 需要释放PWM资源，执行`led.deinit()`函数释放资源。 
+注意，在MicroPython里面，自定义的`__del__`函数，并不会执行。所以我们需要自己定义一个函数`deinit`，用来释放对象的资源， 这也是MicroPython的规范， 经常释放资源是一个好习惯。
+
+
+接下来测试`led.py`：
+
+`test_led.py`
+亮度的取值范围为0-1023， 数值越大， 亮度越大。
+你可以尝试在`led.intensity`函数里面传入不同的亮度， 查看LED的亮度。
+```python
+from led import LED
+
+# 实例化一个LED
+led = LED(0)
+# 设置LED的亮度
+led.intensity(500)
+```
+
+## 使用`led.py`重写呼吸灯函数
+
+```python
+'''
+呼吸灯测试程序
+v2 使用led.py
+'''
+import machine
+import utime, math
+from led import LED
+
+# 初始化一个PWM对象叫做 led_pwm
+led = LED(0)
+
+def pulse(led, delay):
+    # 呼吸灯核心代码
+    # 借用sin正弦函数，将PWM范围控制在 0 - 1000范围内
+    for i in range(20):
+        value = int(math.sin(i / 10 * math.pi) * 500 + 500)
+        # 设置LED的亮度
+        led.intensity(value)
+        # 延时delay个ms
+        utime.sleep_ms(delay)
+try:
+    while True:
+        pulse(led, 50)
+except:
+    # 销毁PWM对象
+    led.deinit()
+```
 
 ## 参考文献
-
-
 
 [经典科普：为什么电影24帧就行，但游戏要60帧？](http://www.igao7.com/news/201510/QMB9FrbTUNLvjpd8.html)
 

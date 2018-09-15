@@ -10,7 +10,7 @@ MicroPython ESP32 从入门到差不多系列课程，嵌入式小白也能看�
 * [MicroPython-ESP32固件烧录](./01_MicroPython-ESP32固件烧录/MicroPython-ESP32固件烧录.md)
 
 * [ESP32的REPL使用方法与文件同步](./02_连接REPL与源码上传picocom+ampy/ESP32的REPL使用方法与文件同步.md)
-
+* [WIFI热点连接与WebREPL配置教程+1ZLAB-MicroIDE使用教程](./14_WIFI热点连接与WebREPL配置教程/WIFI热点连接与WebREPL配置教程.md)
 * [GPIO输出控制小灯亮灭](./03_GPIO输出与控制LED亮灭/GPIO输出控制小灯亮灭.md)
 * [延时函数与LED闪烁](./04_延时函数与LED闪烁/延时函数与LED闪烁.md)
 * [PWM与呼吸灯](./05_PWM与呼吸灯/PWM与呼吸灯.md)
@@ -20,7 +20,6 @@ MicroPython ESP32 从入门到差不多系列课程，嵌入式小白也能看�
 * [DAC数字转模拟](./09_DAC数字转模拟/DAC数字转模拟.md)
 * [Timer定时器与LED闪烁](./10_Timer定时器与LED闪烁/Timer定时器与LED闪烁.md)
 * [UART串口通信](./11_UART串口通信/UART串口通信.md)
-* [WIFI连接](./14_WIFI连接/WIFI连接.md)
 
 ## 项目实战
 * [PyESPCar-基于ESP32的WIFI小车](https://github.com/1zlab/1ZLAB_PyEspCar)

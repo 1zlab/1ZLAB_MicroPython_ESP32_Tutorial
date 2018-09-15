@@ -1,6 +1,6 @@
 '''
 呼吸灯测试程序
-
+v1
 '''
 import machine
 import utime, math
@@ -20,4 +20,4 @@ try:
         pulse(led_pwm, 50)
 except:
     # 销毁PWM对象
-    led.deinit()
+    led_pwm.deinit()
