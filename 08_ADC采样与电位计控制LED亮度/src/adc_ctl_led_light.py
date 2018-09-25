@@ -4,8 +4,8 @@
 from machine import ADC,Pin,PWM
 import utime
 
-# 12号引脚作为led引脚
-led_pin = Pin(12, Pin.OUT)
+# 2号引脚作为led引脚
+led_pin = Pin(2, Pin.OUT)
 led_pwm = PWM(led_pin)
 led_pwm.duty(0)
 led_pwm.freq(1000)

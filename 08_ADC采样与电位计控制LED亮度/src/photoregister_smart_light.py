@@ -7,9 +7,10 @@ Smart LED 基于光敏电阻的智能照明
 from machine import ADC,Pin
 import utime
 
-led_pin = Pin(13)
+led_pin = Pin(2, Pin.OUT)
 # 设置D33号引脚作为ADC采样引脚
-pin_read = Pin(33)
+pin_read = Pin(33, Pin.IN)
+
 # 声明ADC对象
 adc = ADC(pin_read)
 adc.atten(ADC.ATTN_11DB)

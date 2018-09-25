@@ -21,6 +21,10 @@ MicroPython ESP32 从入门到差不多系列课程，嵌入式小白也能看�
 * [Timer定时器与LED闪烁](./10_Timer定时器与LED闪烁/Timer定时器与LED闪烁.md)
 * [UART串口通信](./11_UART串口通信/UART串口通信.md)
 
+* [MQTT入门之概念解析](./15_MQTT通信协议使用/MQTT入门之概念解析.md)
+* [MQTT入门之项目实战](./15_MQTT通信协议使用/MQTT入门之项目实战.md)
+
+
 ## 项目实战
 * [PyESPCar-基于ESP32的WIFI小车](https://github.com/1zlab/1ZLAB_PyEspCar)
 
