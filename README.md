@@ -8,9 +8,10 @@ MicroPython ESP32 从入门到差不多系列课程，嵌入式小白也能看�
 ## 目录
 
 * [MicroPython-ESP32固件烧录](./01_MicroPython-ESP32固件烧录/MicroPython-ESP32固件烧录.md)
-
-* [ESP32的REPL使用方法与文件同步](./02_连接REPL与源码上传picocom+ampy/ESP32的REPL使用方法与文件同步.md)
-* [WIFI热点连接与WebREPL配置教程+1ZLAB-MicroIDE使用教程](./14_WIFI热点连接与WebREPL配置教程/WIFI热点连接与WebREPL配置教程.md)
+* [ESP32的REPL使用方法](./02_ESP32的REPL使用方法/ESP32的REPL使用方法.md)
+* [ESP32接入WIFI热点](./17_ESP32接入WIFI热点/ESP32接入WIFI热点.md)
+* [使用upip安装包](./16_使用upip安装包/使用upip安装包.md)
+* [WebREPL与MIcroIDE配置教程](./14_WebREPL与MIcroIDE配置教程/WebREPL与MIcroIDE配置教程.md)
 * [GPIO输出控制小灯亮灭](./03_GPIO输出与控制LED亮灭/GPIO输出控制小灯亮灭.md)
 * [延时函数与LED闪烁](./04_延时函数与LED闪烁/延时函数与LED闪烁.md)
 * [PWM与呼吸灯](./05_PWM与呼吸灯/PWM与呼吸灯.md)
@@ -23,12 +24,13 @@ MicroPython ESP32 从入门到差不多系列课程，嵌入式小白也能看�
 
 * [MQTT入门之概念解析](./15_MQTT通信协议使用/MQTT入门之概念解析.md)
 * [MQTT入门之项目实战](./15_MQTT通信协议使用/MQTT入门之项目实战.md)
+* [利用AMPY进行文件同步](./18_利用AMPY进行文件同步/利用AMPY进行文件同步.md)
 
 
 ## 项目实战
 * [PyESPCar-基于ESP32的WIFI小车](https://github.com/1zlab/1ZLAB_PyEspCar)
 
-![pyespcar](http://img.1zlab.com/homepage-pyespcar.png)
+![pyespcar](http://src.1zlab.com/homepage-pyespcar.png)
 * [舵机云台人脸追踪](https://github.com/1zlab/1ZLAB_Face_Track_Robot)
 
-![face track](http://img.1zlab.com/homepage-opencv-face-tracking.png)
+![face track](http://src.1zlab.com/homepage-opencv-face-tracking.png)

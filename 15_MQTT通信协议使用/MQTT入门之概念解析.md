@@ -1,12 +1,18 @@
 # MQTT入门之概念解析-MicroPython-ESP32-1Z实验室
+
+## 概要
+
+本节课讲了MQTT协议的特性， MQTT网络里面的组成部分，以及MQTT通信数据传输的流程讲解。
+
+## 推广
+
 **1Z实验室出品**
 **1zlab: make things easy** 致力于在机器人+计算机视觉+人工智能的重叠区域, 制作小白友好的教程.
 
 
 ![img](https://upload-images.jianshu.io/upload_images/1199728-589a80ff77f380d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000)
 
-## 概要
-本节课讲了MQTT协议的特性， MQTT网络里面的组成部分，以及MQTT通信数据传输的流程讲解。
+
 
 
 ## MQTT协议简介
