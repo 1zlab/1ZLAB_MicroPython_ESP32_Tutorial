@@ -22,8 +22,8 @@ MicroPython ESP32 从入门到差不多系列课程，嵌入式小白也能看�
 * [Timer定时器与LED闪烁](./10_Timer定时器与LED闪烁/Timer定时器与LED闪烁.md)
 * [UART串口通信](./11_UART串口通信/UART串口通信.md)
 
-* [MQTT入门之概念解析](./15_MQTT通信协议使用/MQTT入门之概念解析.md)
-* [MQTT入门之项目实战](./15_MQTT通信协议使用/MQTT入门之项目实战.md)
+* [MQTT入门之概念解析](./15_MQTT入门之概念解析/MQTT入门之概念解析.md)
+* [MQTT入门之项目实战](./19_MQTT入门之项目实战/MQTT入门之项目实战.md)
 * [利用AMPY进行文件同步](./18_利用AMPY进行文件同步/利用AMPY进行文件同步.md)
 
 
