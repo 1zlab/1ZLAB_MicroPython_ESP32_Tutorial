@@ -1,6 +1,14 @@
 
 
-# WIFI热点连接与WebREPL配置教程-MicroPython-ESP32-1ZLAB出品
+# WebREPL与MicroIDE配置教程-1Z实验室
+
+
+
+## 概要
+
+本文讲解了ESP32上电连接WIFI热点, 配置WebREPL还有如何使用1ZLAB出品的**[1ZLAB-MicroIDE](http://www.1zlab.com/ide)**
+
+## 推广
 
 **1Z实验室出品**
 
@@ -12,303 +20,104 @@
 
 
 
-## 概要
 
-本文讲解了ESP32上电连接WIFI热点, 配置WebREPL还有如何使用1ZLAB出品的**[1ZLAB-MicroIDE](http://dev.1zlab.com)**
+## ESP32连接WIFI热点
+
+见教程: **ESP32接入WIFI热点**
 
 
 
-## 连接WIFI热点
+## emp-1zlab的安装与配置
 
-在MicroPython里面, 代码的默认执行顺序是先执行`boot.py` 然后执行`main.py`. 
-
-在`boot.py`里面写入WIFI连接的代码.  这段代码会使得每次上电重启的时候自动连接WIFI.
-
-`boot.py` [源码链接](https://github.com/1zlab/1ZLAB_PyEspCar/blob/master/src/boot.py)
+见教程： **使用upip安装包**, 教程里面就是以安装`emp-1zlab`包为例子讲解的。
 
 ```python
-import sys
-
-# 添加路径
-sys.path.append('examples')
-
-def is_legal_wifi(essid, password):
-    '''
-    判断WIFI密码是否合法
-    '''
-    if len(essid) == 0 or len(password) == 0:
-        return False
-    return True
-
-def do_connect():
-    import json
-    import network
-    # 尝试读取配置文件wifi_confi.json,这里我们以json的方式来存储WIFI配置
-    # wifi_config.json在根目录下
-    
-    # 若不是初次运行,则将文件中的内容读取并加载到字典变量 config
-    try:
-        with open('wifi_config.json','r') as f:
-            config = json.loads(f.read())
-    # 若初次运行,则将进入excpet,执行配置文件的创建        
-    except:
-        essid = ''
-        password = ''
-
-        while True:
-            essid = input('wifi name:') # 输入essid
-            password = input('wifi passwrod:') # 输入password
-
-            if is_legal_wifi(essid, password):
-                config = dict(essid=essid, password=password) # 创建字典
-                with open('wifi_config.json','w') as f:
-                    f.write(json.dumps(config)) # 将字典序列化为json字符串,存入wifi_config.json
-                break
-            else:
-                print('ERROR, Please Input Right WIFI')
-    
-    #以下为正常的WIFI连接流程        
-    wifi = network.WLAN(network.STA_IF)  
-    if not wifi.isconnected(): 
-        print('connecting to network...')
-        wifi.active(True) 
-        wifi.connect(config['essid'], config['password']) 
-        import utime
-
-        for i in range(200):
-            print('第{}次尝试连接WIFI热点'.format(i))
-            if wifi.isconnected():
-                break
-            utime.sleep_ms(100) #一般睡个5-10秒,应该绰绰有余
-        
-        if not wifi.isconnected():
-            wifi.active(False) #关掉连接,免得repl死循环输出
-            print('wifi connection error, please reconnect')
-            import os
-            # 连续输错essid和password会导致wifi_config.json不存在
-            try:
-                os.remove('wifi_config.json') # 删除配置文件
-            except:
-                pass
-            do_connect() # 重新连接
-        else:
-            print('network config:', wifi.ifconfig()) 
-
-if __name__ == '__main__':
-    do_connect()
-    import webrepl
-    webrepl.start()
-    from microide import *
-
+>>> import upip
+>>> upip.install('emp-1zlab')
 ```
 
-使用AMPY将`boot.py`文件传到MicroPython-ESP32的文件系统里面.
 
-> PS: 注意, 这个时候, ESP32已经通过USB线跟你的电脑相连接了.
 
-```bash
-sudo ampy --port /dev/ttyUSB0 put boot.py
+导入`emp_boot` 设置启动模式
+
+```python
+>>> import emp_boot
 ```
 
-文件传输成功之后, 使用**picocom**连接到MicroPython的REPL交互式终端.
+设置boot.py的启动模式 **这个操作会修改并覆盖boot.py文件**
 
-> PS: 你可能需要改一下串口设备号
-
-```bash
-sudo picocom -b 115200 /dev/ttyUSB0
+```python
+>>> emp_boot.set_boot_mode()
 ```
 
-在连接上REPL之后, 会显示如下信息:
-
-```bash
-➜  PyEspCar git:(master) ✗ esp32-link 
-picocom v1.7
-
-port is        : /dev/ttyUSB0
-flowcontrol    : none
-baudrate is    : 115200
-parity is      : none
-databits are   : 8
-escape is      : C-a
-local echo is  : no
-noinit is      : no
-noreset is     : no
-nolock is      : no
-send_cmd is    : sz -vv
-receive_cmd is : rz -vv
-imap is        : 
-omap is        : 
-emap is        : crcrlf,delbs,
-
-Terminal ready
->>> 
-```
-
-> PS: 如果你没有看到`>>>` 说明你需要中断当前在执行的程序, 使用`CTRL+C`快捷键.
+![boot-setup](./image/boot-setup.png)
 
 
 
-接下来, 点击开发板上面的 **复位按键 RESET** 
+输入数字0-2
 
-> MicroUSB接口左边的那个
+| boot mode 启动模式 | 备注                                                   |
+| ------------------ | ------------------------------------------------------ |
+| 0                  | boot.py里面啥也不做                                    |
+| 1                  | 启动连接wifi热点                                       |
+| 2                  | 开启开发模式， 启动连接WIFI热点，并开启webrepl开发模式 |
+
+**这里我们选择2**
+
+
+
+接下里代码会扫描周边的热点，找出可用热点列表。
+
+![wifi scan](./image/wifi_connect_choose_and_password.png)
+
+
+
+Which one do you want to access? [0-16] 你想连接到哪个热点？从0-16中间选一个
+
+这里我填入了`0` ， 选择这个名字叫做`zr` 的热点。
+
+Passward for zr:  输入zr热点的密码, 填入密码`zrbengbeng` 
+
+> ps: zr是阿凯的女朋友
 >
-> TODO 添加实物图 
+> bengbeng是阿凯家的兔子。。。
 >
-> 注意: 不是那个PyESPCar底板上面的大的用户按键.
+> **有时候还是自己的手机wifi热点更稳定一些， 尤其是对在学校的同学们来说。**
 
 
 
-当还没有进行WIFI连接的时候, 提示你输入**wifi name** (WIFI名称) 还有 **wifi passward** (WIFI密码).
-
-```bash
-
->>> ets Jun  8 2016 00:22:57
-
-rst:0x1 (POWERON_RESET),boot:0x17 (SPI_FAST_FLASH_BOOT)
-configsip: 0, SPIWP:0xee
-clk_drv:0x00,q_drv:0x00,d_drv:0x00,cs0_drv:0x00,hd_drv:0x00,wp_drv:0x00
-mode:DIO, clock div:2
-load:0x3fff0018,len:4
-load:0x3fff001c,len:4596
-load:0x40078000,len:0
-load:0x40078000,len:12768
-entry 0x4007ad68
-I (387) cpu_start: Pro cpu up.
-I (387) cpu_start: Single core mode
-I (388) heap_init: Initializing. RAM available for dynamic allocation:
-I (391) heap_init: At 3FFAE6E0 len 00001920 (6 KiB): DRAM
-I (397) heap_init: At 3FFC57D0 len 0001A830 (106 KiB): DRAM
-I (403) heap_init: At 3FFE0440 len 00003BC0 (14 KiB): D/IRAM
-I (410) heap_init: At 3FFE4350 len 0001BCB0 (111 KiB): D/IRAM
-I (416) heap_init: At 40091B28 len 0000E4D8 (57 KiB): IRAM
-I (422) cpu_start: Pro cpu start user code
-I (216) cpu_start: Starting scheduler on PRO CPU.
-wifi name:ChinaNet-Q5uk
-wifi passwrod:09223608237
-
-```
-
-接下来, ESP32会在一段时间内一直尝试连接WIFI热点. 根据当前WIFI的网络状况, 可能会多次重连.
-
-```bash
-第0次尝试连接WIFI热点
-第1次尝试连接WIFI热点
-第2次尝试连接WIFI热点
-I (51541) wifi: n:2 0, o:1 0, ap:255 255, sta:2 0, prof:1
-I (52101) wifi: state: init -> auth (b0)
-I (52101) wifi: state: auth -> assoc (0)
-I (52111) wifi: state: assoc -> run (10)
-第3次尝试连接WIFI热点
-第4次尝试连接WIFI热点
-第5次尝试连接WIFI热点
-I (52361) wifi: connected with ChinaNet-Q5uk, channel 2
-I (52371) wifi: pm start, type: 1
-
-I (52371) network: CONNECTED
-第6次尝试连接WIFI热点
-第7次尝试连接WIFI热点
-第8次尝试连接WIFI热点
-第9次尝试连接WIFI热点
-第10次尝试连接WIFI热点
-第11次尝试连接WIFI热点
-第12次尝试连接WIFI热点
-第13次尝试连接WIFI热点
-第14次尝试连接WIFI热点
-
-```
-
-连接成功之后就会打印当前的网络信息
-
-**sta ip** `192.168.2.220` ESP32设备在局域网下的IP, 你的可能是其他的`192.168.xxx.xxx` , 一般来讲,这个IP地址是路由器分配给这个设备的, 当这个设备下次重新连接路由器的时候 , 正常情况下还是这个IP, 所以你需要把这个IP地址记录一下. 
-
-**mask** `255.255.255.0` 是子网掩码
-
-**gw** `192.168.2.1` 是网关, 也就是路由器自己的IP地址
+![connect_wifi_success](./image/connect_wifi_success.png)
 
 
 
-```
-I (53281) event: sta ip: 192.168.2.220, mask: 255.255.255.0, gw: 192.168.2.1
-I (53281) network: GOT_IP
-第15次尝试连接WIFI热点
-network config: ('192.168.2.220', '255.255.255.0', '192.168.2.1', '192.168.2.1')
-```
 
 
-
-然后你可以查看一下文件列表, 发现多出来一个名字叫做`wifi_config.json`的文件
-
-```python
->>> import os
->>> os.listdir()
-['examples', 'boot.py', 'main.py', 'wifi_config.json', 'libs']
-
-```
-
-查看一下它里面的内容
-
-```python
-with open('wifi_config.json') as f:
-    print(f.read())
-```
-
-输出如下
-
-```
-'{"password": "092xx08xx7", "essid": "ChinaNet-Q5uk"}'
-```
+这样就说明wifi就配置成功了， 下次按`RST`重启ESP32的时候，也会自动重连WIFI热点了。
 
 
+## WebREPL简介
 
-如果你想更换热点， 可以删除这个配置文件，然后reboot
+**webrepl是个啥?**
 
-```python
-import os
-os.remove('wifi_config.json')
-```
-
-
-
-## WebREPL配置
+webrepl可以让你在Web上面, 可以像串口的REPL那样, 交互式而且是远程的给ESP32编程, 底层原理是基于Websocket通信.  另外还需要借助一个Web IDE, 这里可以尝试1ZLab推出的 [1ZLAB-MicroIDE](http://www.1zlab.com/dev)
 
 **注意， 只有新版的MicroPython-ESP32 才支持WebREPL， 请给ESP32烧录最新版的固件。**
 
 
 
-然后它会提示你
+## 设置WebREPL
 
-```
-I (53371) modsocket: Initializing
-WebREPL is not configured, run 'import webrepl_setup'
-```
+接下来问题是否开启WebREPL模式， 输入`E`。 
 
-**webrepl是个啥?**
-
-webrepl可以让你在Web上面, 可以像串口的REPL那样, 交互式而且是远程的给ESP32编程, 底层原理是基于Websocket通信.  另外还需要借助一个Web IDE, 这里可以尝试1ZLab推出的 [1ZLAB-MicroIDE](http://dev.1zlab.com)
+![webrepl_enable](./image/webrepl_enable.png)
 
 
 
-在webrepl使用之前, 需要初始化配置:
+初次设置的时候， 它会提示你输入WebREPL的密码：
 
-在REPL里面输入指令, 导入`webrepl_setup`这个包.
+![set_password_for_webrepl](./image/set_password_for_webrepl.png)
 
-```python
-import webrepl_setup
-```
-
-
-
-一开始问你, 是不是在boot的时候允许webrepl的运行.
-
-输入字母`E`, 表示同意执行.
-
-```
-Would you like to (E)nable or (D)isable it running on boot?
-(Empty line to quit)
-> E
-```
-
-接下来, 需要你设置一个WebREPL的密码, 这里我设置的密码是`1zlab`. 
+这里我设置的密码是`1zlab`. 
 
 ```
 New password (4-9 chars): 1zlab
@@ -331,8 +140,6 @@ with open('webrepl_cfg.py') as f:
 ```
 PASS = '1zlab'
 ```
-
-
 
 webrepl服务开启, 默认使用的是**8266** 端口.
 
@@ -386,24 +193,6 @@ ws://IP地址: 端口号
 接下来点击`CONNECT` 连接按钮, 如果成功了, 就会在下方显示`WebREPL Connected` 连接成功的通知.
 
 ![microide-demo-03](./image/microide-demo-03.png)
-
-
-
-### 传输microide.py文件
-
-接下来,如果你是**第一次使用MicroIDE** , 需要点击下方工具栏的云朵标识, 将`microide.py` 传到ESP32里面。
-
-我们在`microide.py` 里面集成了很多内嵌的与IDE交互的功能， 需要搭配这个文件，才能正常使用。
-
-如果文件传输成功了会提示：
-
-```
-success! microide.py! 1222bytes 
-```
-
- 
-
-![microide-demo-05](./image/microide-demo-05.png)
 
 
 
