@@ -1,15 +1,20 @@
 # MQTT入门之项目实战-MicroPython-ESP32-1Z实验室
 
+
+
+## 概要
+本文主要以Ubuntu与MicroPython-ESP32之间进行MQTT通信为主线，讲解了开发环境配置，库的使用方法。
+这篇文章相当于上篇教程**MQTT入门之概念解析-MicroPython-ESP32-1Z实验室**的实战。
+最后留了一个小作业，通过MQTT协议，在PC上控制MicroPython-ESP32上面的LED亮灭。
+
+
+## 推广
 **1Z实验室出品**
 **1zlab: make things easy** 致力于在机器人+计算机视觉+人工智能的重叠区域, 制作小白友好的教程.
 
 
 ![img](https://upload-images.jianshu.io/upload_images/1199728-589a80ff77f380d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000)
 
-## 概要
-本文主要以Ubuntu与MicroPython-ESP32之间进行MQTT通信为主线，讲解了开发环境配置，库的使用方法。
-这篇文章相当于上篇教程**MQTT入门之概念解析-MicroPython-ESP32-1Z实验室**的实战。
-最后留了一个小作业，通过MQTT协议，在PC上控制MicroPython-ESP32上面的LED亮灭。
 
 ## Mosquitto
 

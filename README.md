@@ -1,4 +1,6 @@
-# 1ZLAB_MicroPython_ESP32_Tutorial
+# MicroPython-ESP32从入门到差不多
+
+
 
 ## 概要
 [1Z实验室(1zlab.com)](http://1zlab.com)出品 **1ZLAB: Make Things Easy**
@@ -34,3 +36,10 @@ MicroPython ESP32 从入门到差不多系列课程，嵌入式小白也能看�
 * [舵机云台人脸追踪](https://github.com/1zlab/1ZLAB_Face_Track_Robot)
 
 ![face track](http://src.1zlab.com/homepage-opencv-face-tracking.png)
+
+## 推广
+**1Z实验室出品**
+**1zlab: make things easy** 致力于在机器人+计算机视觉+人工智能的重叠区域, 制作小白友好的教程.
+
+
+![img](https://upload-images.jianshu.io/upload_images/1199728-589a80ff77f380d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000)
