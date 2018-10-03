@@ -14,8 +14,6 @@
 ![img](https://upload-images.jianshu.io/upload_images/1199728-589a80ff77f380d8.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1000)
 
 
-
-
 ## 安装picocom
 
 picocom是linux下的串口（终端）调试工具， 最简单易用。
@@ -34,6 +32,12 @@ REPL的全称是`Read读入`+ `Evaluate执行` + `Print打印` + `Loop循环`。
 
 连接MicroPython开发板的中断，直接输入就是输入一句，执行一句，并且将结果打印到终端上面。
 
+**规约：在教程里如果代码是输入到`REPL`的话，都会添加`>>>`标志**
+例如如下代码：
+```python
+>>> print('HelloWorld')
+```
+就代表是在`REPL`里面输入了`print('HelloWorld')`， **注意,` >>>` 不需要输入。**
 
 
 首先需要通过串口链接MicroPython的终端： 
@@ -211,14 +215,14 @@ paste mode; Ctrl-C to cancel, Ctrl-D to finish
 
 `Ctrl + A` 是转义键
 
-按 `Ctrl + A ` 然后按`Ctrl + Q` 就能够退出终端。
+重要的事情，需要多重复几遍：
 
+* 按 `Ctrl + A ` 然后按`Ctrl + Q` 就能够退出终端。
+* 按 `Ctrl + A ` 然后按`Ctrl + Q` 就能够退出终端。
+* 按 `Ctrl + A ` 然后按`Ctrl + Q` 就能够退出终端。
+* 按 `Ctrl + A ` 然后按`Ctrl + Q` 就能够退出终端。
 
-
-
-
-
-
+如果直接关闭掉`Terminal`左上角的`X`叉叉也是可以的。
 
 ## ESP32开发板的局限
 

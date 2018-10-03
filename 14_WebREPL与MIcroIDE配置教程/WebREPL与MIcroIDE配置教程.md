@@ -88,9 +88,11 @@ Passward for zr:  输入zr热点的密码, 填入密码`zrbengbeng`
 
 ![connect_wifi_success](./image/connect_wifi_success.png)
 
+* **注意： 上方红色的`IP: 192.168.43.168` 就是ESP32在当前局域网下的IP地址。**
+* **注意： 上方红色的`IP: 192.168.43.168` 就是ESP32在当前局域网下的IP地址。**
+* **注意： 上方红色的`IP: 192.168.43.168` 就是ESP32在当前局域网下的IP地址。**
 
-
-
+你的应该不是这个IP， 而且，`一般情况下`，路由器给当前这个ESP32设备分配的IP地址不会变。
 
 这样就说明wifi就配置成功了， 下次按`RST`重启ESP32的时候，也会自动重连WIFI热点了。
 
@@ -126,7 +128,7 @@ Confirm password: 1zlab
 
 **webrepl的配置就ok了**
 
-配置好了之后会在目录里面添加一个名字叫做`webrepl_cfg.py` 的文件.
+配置好了之后会在 **ESP32的主目录** 里面添加一个名字叫做`webrepl_cfg.py` 的文件.
 
 同样, 你也可以查看`webrepl_cfg.py`里面的内容.
 
@@ -134,15 +136,34 @@ Confirm password: 1zlab
 with open('webrepl_cfg.py') as f:
     print(f.read())
 ```
-
 输出结果:
 
 ```
 PASS = '1zlab'
 ```
 
-webrepl服务开启, 默认使用的是**8266** 端口.
+![webrepl_cfg_output](./image/webrepl_cfg_output.png)
 
+执行上面的脚本需要使用REPL的Paste模式，这里重复一下： 
+
+然后在picocom的REPL里面按`CTRL+E`进入粘贴模式， 右键粘贴刚才的代码片段。
+
+**注意：粘贴好代码后，不要尝试修改粘贴好的代码，或者追加**
+
+```python
+>>> 
+paste mode; Ctrl-C to cancel, Ctrl-D to finish
+=== 
+```
+
+然后中端会提示你`Ctrl + C` 撤销刚才粘贴的代码， 就当啥也没发生过。
+
+你可以按`Ctrl+D` 执行你刚才粘贴的代码。
+
+
+
+**注意1： webrepl服务开启, 默认使用的是 `8266` 端口。**
+**注意2： WebREPL服务需要重启生效，按ESP32开发板上的`RST`按钮。**
 
 
 ## 1Z WebIDE 使用教程
@@ -195,6 +216,38 @@ ws://IP地址: 端口号
 ![microide-demo-03](./image/microide-demo-03.png)
 
 
+连接不上，或者意外断开，尝试重新开启WebREPL。
+**注意1： WebREPL服务需要重启生效，按ESP32开发板上的`RST`按钮。**
+**注意2： 查看当前的WIFI信号是否通畅，另外最好关闭各种网络代理软件，例如lantern**
+**注意3： 内存溢出，也是导致连接断开的原因之一。**
+
+通过`gc`模块，可以释放资源，查看当前剩余的内存。
+在使用的时候`import gc`模块， gc的英文全称是`garbage collection`
+```python
+>>> import gc
+```
+**查看当前内存还有多少剩余空间**：
+```python
+>>> gc.mem_free()
+56048
+```
+这里返回的数值单位是`bytes`， 
+```
+1 KB = 1024 bytes
+1 MB = 1024 KB 
+```
+所以`56048 bytes` = `0.053 MB`
+
+**收集垃圾**使用`gc.collect()`
+```python
+>>> gc.collect()
+```
+收集玩垃圾之后，你可以看到剩余的内存就变多了。
+```python
+>>> gc.mem_free()
+80976
+>>> 
+```
 
 ### 查看文件目录
 

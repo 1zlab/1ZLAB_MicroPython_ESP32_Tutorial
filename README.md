@@ -3,8 +3,6 @@
 
 
 ## 概要
-[1Z实验室(1zlab.com)](http://1zlab.com)出品 **1ZLAB: Make Things Easy**
-MicroPython ESP32 从入门到差不多系列课程，嵌入式小白也能看的懂.
 
 ![micropython-esp32](http://src.1zlab.com/homepage-micropython-esp32.png)
 ## 目录

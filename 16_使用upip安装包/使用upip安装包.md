@@ -22,7 +22,7 @@ https://pypi.org/project/emp-1zlab/
 
 首先确定你**已经连接上了WIFI**， 连接上WIFI就可以跟外网打通， 可以请求远程的资源。
 
-请见目录里面的**ESP32接入WIFI热点** 这一章。
+请见目录里面的 **ESP32接入WIFI热点** 这一章。
 
 
 
@@ -61,16 +61,16 @@ https://pypi.org/project/emp-1zlab/
 '/lib'
 ```
 
-可以使用`os.listdir` 查看当前你安装好的包
+可以使用`os.listdir` 查看当前你安装好的包。
+使用前需要先引入**os**模块， 引入模块使用`import`语法。
 
 ```python
+>>> import os
 >>> os.listdir('lib')
 ['emp_boot.py', 'emp_dev.py', 'emp_utils.py', 'emp_wifi.py', 'umqtt', 'mqtt']
 ```
 
-
-
-安装了`emp-1zlab` 自动下载了三个文件夹到本地
+安装了`emp-1zlab` 自动下载了三个文件夹到ESP32的`./lib`文件夹下:
 
 * `emp_boot.py`
 * `emp_dev.py`

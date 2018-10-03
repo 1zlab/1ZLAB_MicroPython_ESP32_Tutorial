@@ -22,33 +22,46 @@ ESP32开发板只有烧录了MicroPython的固件，才能使用MicroPython进�
 
 固件下载地址： https://micropython.org/download/#esp32
 
+## 安装pip或pip3
+Ubuntu下默认自带Python的解释器`Python2.7`跟`Python3.5`，开发一般我们选择`Python3.5`
 
+**注意，不要替换Ubuntu下的Python2.7跟Python3.5**
+1. 不要把系统自带的`Python3.5`升级为`Python3.7`等更新的版本，除非是使用Anaconda这种管理工具。
+2. 不要把`usr/bin`里面的`python`从`python2`替换成`python3`， 会导致系统运行一些功能的时候出现异常。使用Python3的时候尽量显示的去执行`python3 + xxxxx.py`
 
-## 安装固件烧录工具 ESPTOOL
+另外pip是python的包管理工具，默认系统是没有安装pip的。
+`python2`的包管理工具对应的是`pip`， `Python3`的包管理工具对应的是`pip3`
 
-通过pip安装esptool
-
-```
-sudo pip install esptool --upgrade
-```
-
-
-ESPTOOL 的帮助文档见： https://github.com/espressif/esptool
-
-
-
->  注意：如果是anaconda  就不能通过`pip` 安装。 可以在`.bashrc`中， 先屏蔽掉anaconda ，然后安装pip
-
+**pip安装**
 ```python
 sudo apt-get install python-pip
 ```
 
-然后通过pip安装ESPtool
-
+**pip3安装**
 ```python
-sudo pip install esptool --upgrade
+sudo apt-get install python-pip
 ```
 
+
+## 安装固件烧录工具 ESPTOOL
+
+**esptool在python2与python3均有发行版本，可以通过pip或pip3安装esptool， 在实际使用的时候并无区别。**
+
+
+**pip (Python2) 安装esptool**
+
+```bash
+sudo pip install esptool --upgrade
+```
+或者是
+**pip3 (Python3)安装esptool**
+
+```bash
+sudo pip3 install esptool --upgrade
+```
+ESPTOOL 的帮助文档见： https://github.com/espressif/esptool
+
+>  注意：如果是anaconda  就不能通过`pip` 安装。 可以在`.bashrc`中， 先屏蔽掉anaconda ，然后安装pip
 
 
 ## 使用esptool进行固件烧录
