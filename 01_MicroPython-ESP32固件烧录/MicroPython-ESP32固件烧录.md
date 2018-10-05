@@ -39,7 +39,7 @@ sudo apt-get install python-pip
 
 **pip3安装**
 ```python
-sudo apt-get install python-pip
+sudo apt-get install python3-pip
 ```
 
 
@@ -69,7 +69,10 @@ ESPTOOL 的帮助文档见： https://github.com/espressif/esptool
 将ESP32开发板与PC相连,  确定ESP32开发板在Ubuntu下分配的端口号 `ttyUSB?` 
 
 ```bash
-➜  ~ ls -l /dev/ttyUSB* 
+ls -l /dev/ttyUSB* 
+```
+**OUTPUT**
+```bash
 crw-rw---- 1 root dialout 188, 0 8月  10 10:42 /dev/ttyUSB0
 ```
 
@@ -83,7 +86,7 @@ sudo esptool.py --chip esp32 --port /dev/ttyUSB0 write_flash -z  0x1000 esp32-xx
 固件烧录日志
 
 ```bash
-fange@cr ~/D/E/1/固件> sudo esptool.py --chip esp32 --port /dev/ttyUSB1 write_flash -z  0x1000 esp32-20180411-v1.9.3-534-g59dda710.bin 
+akai@1zlab ~/D/E/1/固件> sudo esptool.py --chip esp32 --port /dev/ttyUSB1 write_flash -z  0x1000 esp32-20180411-v1.9.3-534-g59dda710.bin 
 esptool.py v2.3.1
 Connecting........_
 Chip is ESP32D0WDQ6 (revision 1)
