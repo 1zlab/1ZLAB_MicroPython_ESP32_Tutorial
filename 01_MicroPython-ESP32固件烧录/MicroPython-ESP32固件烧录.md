@@ -33,12 +33,12 @@ Ubuntu下默认自带Python的解释器`Python2.7`跟`Python3.5`，开发一般�
 `python2`的包管理工具对应的是`pip`， `Python3`的包管理工具对应的是`pip3`
 
 **pip安装**
-```python
+```bash
 $ sudo apt-get install python-pip
 ```
 
 **pip3安装**
-```python
+```bash
 $ sudo apt-get install python3-pip
 ```
 
