@@ -34,7 +34,7 @@ Ampy的原理就是进入REPL，在REPL中完成文件的同步。所以在使�
 通过`pip` 安装`ampy`
 
 ```bash
-sudo pip install adafruit-ampy --upgrade
+$ sudo pip install adafruit-ampy --upgrade
 ```
 
 安装成功, 查看ampy的版本号：
@@ -78,7 +78,7 @@ while True:
 接下来在终端执行代码：
 
 ```bash
-sudo ampy --port /dev/ttyUSB0 run led.py 
+$ sudo ampy --port /dev/ttyUSB0 run led.py 
 ```
 
 然后ESP32开发板就会执行`led.py` 里面的内容。 这个效果跟REPL里面的**Paste 粘贴模式** 效果是一样的。
@@ -89,13 +89,13 @@ sudo ampy --port /dev/ttyUSB0 run led.py
 
 文件上传使用`put`指令，把之前写好的`led.py` 上传到ESP32的文件系统里面。
 
-```
-sudo ampy --port /dev/ttyUSB0 put led.py
+```bash
+$ sudo ampy --port /dev/ttyUSB0 put led.py
 ```
 
 通过终端重新链接, 查看刚刚存入的.py文件.
 
-```
+```python
 >>> import os
 >>> os.listdir()
 ['boot.py', 'led.py']
@@ -107,14 +107,14 @@ sudo ampy --port /dev/ttyUSB0 put led.py
 
 首先需要创建一个`main.py`  我们直接将之前的 `led.py` 重命名为`main.py`
 
-```
-cp led.py main.py
+```bash
+$ cp led.py main.py
 ```
 
 然后将`main.py`上传到板子上
 
-```
-sudo ampy --port /dev/ttyUSB0 put main.py 
+```bash
+$ sudo ampy --port /dev/ttyUSB0 put main.py 
 ```
 
 接下来, 按硬件上的**复位 Reset**按钮， 硬件开始执行LED小灯的程序.
@@ -125,8 +125,8 @@ sudo ampy --port /dev/ttyUSB0 put main.py
 
 删除文件使用`rm` 指令。
 
-```
-ampy --port /dev/ttyUSB0 rm led.py 
+```bash
+$ ampy --port /dev/ttyUSB0 rm led.py 
 ```
 
 

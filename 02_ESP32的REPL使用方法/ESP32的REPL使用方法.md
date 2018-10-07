@@ -21,8 +21,8 @@ picocom是linux下的串口（终端）调试工具， 最简单易用。
 
 https://developer.ridgerun.com/wiki/index.php/Setting_up_Picocom_-_Ubuntu
 
-```
-sudo apt-get install picocom
+```bash
+$ sudo apt-get install picocom
 ```
 
 
@@ -42,8 +42,8 @@ REPL的全称是`Read读入`+ `Evaluate执行` + `Print打印` + `Loop循环`。
 
 首先需要通过串口链接MicroPython的终端： 
 
-```
-sudo picocom -b 115200 /dev/ttyUSB0
+```bash
+$ sudo picocom -b 115200 /dev/ttyUSB0
 ```
 
 `-b` 是制定波特率`boundrate` 为115200
@@ -57,7 +57,7 @@ sudo picocom -b 115200 /dev/ttyUSB0
 连接上窗口的时候，会打印一些ESP32开发板的信息：
 
 ```bash
-scorpion@tl ~/P/MicroPython> sudo picocom -b 115200 /dev/ttyUSB0
+$ sudo picocom -b 115200 /dev/ttyUSB0
 [sudo] password for scorpion: 
 picocom v2.2
 

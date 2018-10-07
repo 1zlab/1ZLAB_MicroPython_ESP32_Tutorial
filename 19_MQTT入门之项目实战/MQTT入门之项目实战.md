@@ -25,7 +25,7 @@
 其中`mosquitto`就是MQTT Broker的实现， `mosquitto-clients`是MQTT客户端的实现。
 
 ```bash
-sudo apt-get install mosquitto mosquitto-clients 
+$ sudo apt-get install mosquitto mosquitto-clients 
 ```
 
 
@@ -37,7 +37,7 @@ sudo apt-get install mosquitto mosquitto-clients
 `-m` 代表message信息
 
 ```bash
-mosquitto_pub -t 'pyespcar_basic_control' -m 'MOVE_FORWARD'
+$ mosquitto_pub -t 'pyespcar_basic_control' -m 'MOVE_FORWARD'
 ```
 
 在中端上执行上面的这条信息，等于在主题`pyespcar_basic_control` 下发布一条信息`MOVE_FORWARD`
@@ -49,7 +49,7 @@ mosquitto_pub -t 'pyespcar_basic_control' -m 'MOVE_FORWARD'
 安装成功之后， 你可以通过`mosquitto_sub` 指令， 在中端获取特定Topic的数据。 
 
 ```bash
-mosquitto_sub  -t 'pyespcar_basic_control'
+$ mosquitto_sub  -t 'pyespcar_basic_control'
 ```
 
 
@@ -59,13 +59,13 @@ mosquitto_sub  -t 'pyespcar_basic_control'
 打开终端的两个窗口， 首先开启接收者的服务。
 
 ```bash
-mosquitto_sub  -t 'pyespcar_basic_control'
+$ mosquitto_sub  -t 'pyespcar_basic_control'
 ```
 
 然后尝试在另外一个窗口发送信息：
 
-```python
-mosquitto_pub -t 'pyespcar_basic_control' -m 'MOVE_FORWARD'
+```bash
+$ mosquitto_pub -t 'pyespcar_basic_control' -m 'MOVE_FORWARD'
 ```
 
 
@@ -94,7 +94,7 @@ mosquitto_pub -t 'pyespcar_basic_control' -m 'MOVE_FORWARD'
 
 
 ```bash
-sudo pip3 install paho-mqtt
+$ sudo pip3 install paho-mqtt
 ```
 
 
@@ -169,12 +169,12 @@ while True:
 
 ```bash
 # 运行订阅者
-python3 paho-mqtt-subsriber.py
+$ python3 paho-mqtt-subsriber.py
 ```
 
-```python
+```bash
 # 运行发布者
-python3 paho-mqtt-subsriber.py
+$ python3 paho-mqtt-subsriber.py
 ```
 
 功能其实跟上文的`Mosquitto`例程差不多。
@@ -240,7 +240,7 @@ Installing micropython-umqtt.simple 1.3.4 from https://files.pythonhosted.org/pa
 查看PC当前的IP, 在Ubuntu(作为Server)的命令行里面执行指令：
 
 ```bash
-ifconfig
+$ ifconfig
 ```
 
 
